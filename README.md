@@ -1,36 +1,80 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 认证系统前端
 
-## Getting Started
+基于Next.js 14、Tailwind CSS和Ant Design构建的前端认证系统，与NestJS后端对接。
 
-First, run the development server:
+## 功能特性
+
+- 用户登录
+- 用户注册
+- JWT认证
+- 响应式设计
+- 表单验证
+- 状态管理
+
+## 技术栈
+
+- Next.js 14
+- React 18
+- TypeScript
+- Tailwind CSS
+- Ant Design
+- Axios
+
+## 快速开始
+
+1. 克隆项目
+
+```bash
+git clone https://github.com/your-repo/auth-frontend.git
+cd auth-frontend
+```
+
+2. 安装依赖
+
+```bash
+npm install
+```
+
+3. 配置环境变量
+
+复制`.env.example`文件为`.env.local`，并根据需要修改配置：
+
+```bash
+cp .env.example .env.local
+```
+
+4. 启动开发服务器
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+5. 访问应用
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+打开浏览器访问 [http://localhost:3001](http://localhost:3001)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 项目结构
 
-## Learn More
+```
+src/
+├── app/                    # 页面路由
+│   ├── (auth)/             # 认证相关页面
+│   │   ├── login/          # 登录页面
+│   │   └── register/       # 注册页面
+│   └── page.tsx            # 主页
+├── components/             # 公共组件
+├── contexts/               # React上下文
+├── services/               # API服务
+└── types/                  # 类型定义
+```
 
-To learn more about Next.js, take a look at the following resources:
+## 构建生产版本
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npm run build
+npm run start
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 许可证
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT
