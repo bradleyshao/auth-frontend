@@ -1,103 +1,65 @@
-import Image from "next/image";
+'use client';
 
-export default function Home() {
+import { useAuthStore } from '@/store/authStore';
+import ProtectedRoute from '@/components/ProtectedRoute';
+import { Button, Card, Typography, Avatar, Space, Divider } from 'antd';
+import { LogoutOutlined, UserOutlined } from '@ant-design/icons';
+
+const { Title, Text, Paragraph } = Typography;
+
+export default function HomePage() {
+  const { user, logout } = useAuthStore();
+
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <ProtectedRoute>
+      <div className="min-h-screen bg-gray-100 p-4 sm:p-6 md:p-8">
+        <div className="max-w-4xl mx-auto">
+          <Card className="shadow-md">
+            <div className="flex flex-col md:flex-row justify-between items-center mb-6">
+              <div className="flex items-center mb-4 md:mb-0">
+                <Avatar size={64} icon={<UserOutlined />} className="bg-blue-500" />
+                <div className="ml-4">
+                  <Title level={3} className="m-0">
+                    欢迎回来，{user?.username}
+                  </Title>
+                  <Text type="secondary">用户ID: {user?.userId}</Text>
+                </div>
+              </div>
+              <Button 
+                type="primary" 
+                danger 
+                icon={<LogoutOutlined />} 
+                onClick={logout}
+                size="large"
+              >
+                退出登录
+              </Button>
+            </div>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+            <Divider />
+
+            <Title level={4}>登录成功</Title>
+            <Paragraph>
+              您已成功登录系统。这是一个受保护的页面，只有登录后才能访问。
+            </Paragraph>
+            
+            <Paragraph>
+              您的登录凭证已保存在浏览器的本地存储中，关闭浏览器后仍然有效。
+              如果需要退出登录，请点击右上角的"退出登录"按钮。
+            </Paragraph>
+
+            <Divider />
+
+            <Title level={4}>JWT认证说明</Title>
+            <Paragraph>
+              本系统使用JWT(JSON Web Token)进行认证。JWT是一种基于JSON的开放标准，
+              用于在各方之间安全地传输信息。当您登录成功后，服务器会生成一个JWT令牌，
+              并返回给前端。前端将这个令牌保存在本地存储中，并在后续的请求中通过
+              Authorization头部发送给服务器，以证明您的身份。
+            </Paragraph>
+          </Card>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+      </div>
+    </ProtectedRoute>
   );
 }
