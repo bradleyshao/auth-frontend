@@ -14,10 +14,16 @@ export default function RegisterPage() {
   const { register, isAuthenticated, loading } = useAuthStore();
   const router = useRouter();
   const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   // 如果已经登录，重定向到主页
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.push('/homepage');
+    }
+  }, [isAuthenticated, router]);
+
   if (isAuthenticated) {
-    router.push('/homepage');
     return null;
   }
 
@@ -27,16 +33,16 @@ export default function RegisterPage() {
       await register(values.username, values.password);
       // 注册成功后重定向到主页
       router.push('/homepage');
-    } catch (error) {
+    } catch (error: any) {
       console.error('Register error:', error);
+      setError(error.response?.data?.message || '注册失败，请稍后再试');
     } finally {
       setSubmitting(false);
     }
   };
 
   return (
-    <div className="auth-container">
-      <Card className="auth-card">
+      <Card className="auth-card w-[400px] bg-white/90">
         <Title level={2} className="auth-title">
           用户注册
         </Title>
@@ -112,6 +118,12 @@ export default function RegisterPage() {
             </Button>
           </Form.Item>
         </Form>
+
+        {error && (
+          <div className="text-red-500 mb-4 text-center">
+            {error}
+          </div>
+        )}
         
         <div className="auth-footer">
           <Text>
@@ -119,6 +131,5 @@ export default function RegisterPage() {
           </Text>
         </div>
       </Card>
-    </div>
   );
 }

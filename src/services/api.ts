@@ -33,9 +33,12 @@ api.interceptors.response.use(
     // 处理401错误 - 未授权
     if (error.response && error.response.status === 401) {
       localStorage.removeItem('access_token');
-      // 使用zustand的方式处理登出
+      // 更新Zustand store状态
       if (typeof window !== 'undefined') {
-        window.location.href = '/login';
+        // 动态导入避免循环依赖
+        import('@/store/authStore').then(({ useAuthStore }) => {
+          useAuthStore.getState().logout();
+        });
       }
     }
     return Promise.reject(error);

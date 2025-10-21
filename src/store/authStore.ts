@@ -7,11 +7,12 @@ import { authApi } from '@/services/api';
 import { message } from 'antd';
 
 interface AuthStore extends AuthState {
-  login: (username: string, password: string) => Promise<void>;
+  login: (username: string, password: string) => Promise<{ message?: string; access_token?: string }>;
   register: (username: string, password: string) => Promise<void>;
   logout: () => void;
   parseToken: (token: string) => User | null;
   setLoading: (loading: boolean) => void;
+  setUser: (user: User | null) => void;
 }
 
 export const useAuthStore = create<AuthStore>()(
@@ -32,6 +33,7 @@ export const useAuthStore = create<AuthStore>()(
           return {
             userId: payload.userId,
             username: payload.username,
+            access: payload.access // 添加access权限信息
           };
         } catch (error) {
           console.error('Failed to parse token:', error);
@@ -58,7 +60,8 @@ export const useAuthStore = create<AuthStore>()(
             loading: false,
             error: null,
           });
-          message.success(response.message || '登录成功');
+          // 将后端响应返回给调用方以便页面展示成功信息
+          return response;
         } catch (error: any) {
           console.error('Login error:', error);
           set({
@@ -67,7 +70,10 @@ export const useAuthStore = create<AuthStore>()(
             loading: false,
             error: error.response?.data?.message || '登录失败，请检查用户名和密码',
           });
-          message.error(error.response?.data?.message || '登录失败，请检查用户名和密码');
+          const msg = error.response?.data?.message || '登录失败，请检查用户名和密码';
+          message.error(msg);
+          // 向调用方抛出错误，避免页面误判为成功而跳转
+          throw new Error(msg);
         }
       },
 
@@ -90,7 +96,7 @@ export const useAuthStore = create<AuthStore>()(
             loading: false,
             error: null,
           });
-          message.success(response.message || '注册成功');
+          return response;
         } catch (error: any) {
           console.error('Register error:', error);
           set({
@@ -99,7 +105,12 @@ export const useAuthStore = create<AuthStore>()(
             loading: false,
             error: error.response?.data?.message || '注册失败，请稍后再试',
           });
-          message.error(error.response?.data?.message || '注册失败，请稍后再试');
+          
+          // 对409冲突错误进行特殊处理
+          if (error.response?.status === 409) {
+            throw new Error('用户名已存在，请选择其他用户名');
+          }
+          throw error;
         }
       },
 
@@ -117,6 +128,9 @@ export const useAuthStore = create<AuthStore>()(
       
       setLoading: (loading: boolean) => {
         set({ loading });
+      },
+      setUser: (user: User | null) => {
+        set({ user });
       },
     }),
     {

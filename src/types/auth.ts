@@ -21,6 +21,7 @@ export interface AuthResponse {
 export interface User {
   userId: string;
   username: string;
+  access?: Record<string, string>;
 }
 
 // 认证状态

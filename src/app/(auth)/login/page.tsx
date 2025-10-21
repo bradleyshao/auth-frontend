@@ -13,6 +13,8 @@ export default function LoginPage() {
   const [form] = Form.useForm();
   const router = useRouter();
   const [submitting, setSubmitting] = useState(false);
+  const [successMsg, setSuccessMsg] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const { login, isAuthenticated, loading, setLoading } = useAuthStore();
 
   useEffect(() => {
@@ -20,28 +22,32 @@ export default function LoginPage() {
     setLoading(false);
   }, [setLoading]);
 
-  // 如果已经登录，重定向到主页
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.push('/homepage');
+    }
+  }, [isAuthenticated, router]);
+
   if (isAuthenticated) {
-    router.push('/homepage');
     return null;
   }
 
   const handleSubmit = async (values: { username: string; password: string }) => {
     try {
       setSubmitting(true);
-      await login(values.username, values.password);
-      // 登录成功后重定向到主页
+      const response = await login(values.username, values.password);
+      setSuccessMsg(response?.message || '登录成功');
       router.push('/homepage');
-    } catch (error) {
+    } catch (error: any) {
       console.error('Login error:', error);
+      setError(error.message || '登录失败，请检查用户名和密码');
     } finally {
       setSubmitting(false);
     }
   };
 
   return (
-    <div className="auth-container">
-      <Card className="auth-card">
+      <Card className="auth-card w-[400px] bg-white/90">
         <Title level={2} className="auth-title">
           用户登录
         </Title>
@@ -88,12 +94,16 @@ export default function LoginPage() {
           </Form.Item>
         </Form>
         
+        {(successMsg || error) && (
+          <div className={`text-center mb-4 ${successMsg ? 'text-green-500' : 'text-red-500'}`}>
+            {successMsg || error}
+          </div>
+        )}
         <div className="auth-footer">
           <Text>
             还没有账号？ <Link href="/register">立即注册</Link>
           </Text>
         </div>
       </Card>
-    </div>
   );
 }
