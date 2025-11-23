@@ -19,8 +19,29 @@ export default function AuthLayout({
   }, [isAuthenticated, router]);
 
   return (
-    <div className="auth-container bg-[url('/login-background.jpg')] bg-cover bg-center min-h-screen flex items-center justify-center">
-      {children}
+    <div 
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        minHeight: '100vh',
+        padding: '1rem',
+        position: 'relative',
+        overflow: 'hidden',
+        background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)'
+      }}
+    >
+      {/* 移动的紫色背景元素 */}
+      <div className="floating-blob floating-blob-1"></div>
+      <div className="floating-blob floating-blob-2"></div>
+      <div className="floating-blob floating-blob-3"></div>
+      <div className="floating-blob floating-blob-4"></div>
+      <div className="floating-blob floating-blob-5"></div>
+      
+      {/* 内容层，确保在背景元素之上 */}
+      <div style={{ position: 'relative', zIndex: 1 }}>
+        {children}
+      </div>
     </div>
   );
 }

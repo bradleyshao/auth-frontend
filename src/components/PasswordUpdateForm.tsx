@@ -80,7 +80,12 @@ export default function PasswordUpdateForm({ onCancel }: { onCancel: () => void 
           message={error}
           type="error"
           showIcon
-          style={{ marginBottom: 16 }}
+          closable
+          onClose={() => setError(null)}
+          style={{ 
+            marginBottom: 20,
+            borderRadius: '12px'
+          }}
         />
       )}
       {success && (
@@ -88,39 +93,112 @@ export default function PasswordUpdateForm({ onCancel }: { onCancel: () => void 
           message={success}
           type="success"
           showIcon
-          style={{ marginBottom: 16 }}
+          style={{ 
+            marginBottom: 20,
+            borderRadius: '12px'
+          }}
         />
       )}
-      <Form form={form} onFinish={onFinish} layout="vertical">
+      <Form 
+        form={form} 
+        onFinish={onFinish} 
+        layout="vertical"
+        size="large"
+      >
         <Form.Item
           name="currentPassword"
-          label="当前密码"
+          label={<span style={{ fontWeight: '600', color: '#1a1a1a' }}>当前密码</span>}
           rules={[{ required: true, message: '请输入当前密码' }]}
         >
-          <Input.Password />
+          <Input.Password 
+            placeholder="请输入当前密码"
+            style={{
+              borderRadius: '12px',
+              padding: '10px 12px',
+              fontSize: '15px'
+            }}
+          />
         </Form.Item>
         <Form.Item
           name="newPassword"
-          label="新密码"
+          label={<span style={{ fontWeight: '600', color: '#1a1a1a' }}>新密码</span>}
           rules={[
             { required: true, message: '请输入新密码' },
             { min: 6, message: '密码长度至少6位' },
             { max: 50, message: '密码长度不能超过50位' }
           ]}
         >
-          <Input.Password placeholder="请输入新密码（至少6位）" />
+          <Input.Password 
+            placeholder="请输入新密码（至少6位）"
+            style={{
+              borderRadius: '12px',
+              padding: '10px 12px',
+              fontSize: '15px'
+            }}
+          />
         </Form.Item>
         <Form.Item
           name="confirmPassword"
-          label="确认新密码"
+          label={<span style={{ fontWeight: '600', color: '#1a1a1a' }}>确认新密码</span>}
           rules={[{ required: true, message: '请再次输入新密码' }]}
         >
-          <Input.Password />
+          <Input.Password 
+            placeholder="请再次输入新密码"
+            style={{
+              borderRadius: '12px',
+              padding: '10px 12px',
+              fontSize: '15px'
+            }}
+          />
         </Form.Item>
-        <Form.Item>
-          <Space>
-            <Button type="primary" htmlType="submit">保存</Button>
-            <Button onClick={onCancel}>取消</Button>
+        <Form.Item style={{ marginTop: '24px', marginBottom: 0 }}>
+          <Space size="middle">
+            <Button 
+              type="primary" 
+              htmlType="submit"
+              style={{
+                height: '48px',
+                borderRadius: '12px',
+                fontSize: '15px',
+                fontWeight: '600',
+                padding: '0 32px',
+                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                border: 'none',
+                boxShadow: '0 4px 12px rgba(102, 126, 234, 0.3)',
+                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-2px)';
+                e.currentTarget.style.boxShadow = '0 6px 20px rgba(102, 126, 234, 0.4)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 4px 12px rgba(102, 126, 234, 0.3)';
+              }}
+            >
+              保存
+            </Button>
+            <Button 
+              onClick={onCancel}
+              style={{
+                height: '48px',
+                borderRadius: '12px',
+                fontSize: '15px',
+                fontWeight: '600',
+                padding: '0 32px',
+                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = '#667eea';
+                e.currentTarget.style.color = '#667eea';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = '#d9d9d9';
+                e.currentTarget.style.color = 'inherit';
+              }}
+            >
+              取消
+            </Button>
           </Space>
         </Form.Item>
       </Form>

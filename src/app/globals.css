@@ -55,3 +55,169 @@ body {
   text-align: center;
   margin-top: 16px;
 }
+
+/* 现代化侧边栏菜单样式 */
+.modern-sidebar-menu .ant-menu-item {
+  margin: 4px 0 !important;
+  border-radius: 12px !important;
+  height: 48px !important;
+  line-height: 48px !important;
+  margin-bottom: 8px !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  border: none !important;
+  color: #1a1a1a !important;
+}
+
+/* 未选中状态的hover效果 */
+.modern-sidebar-menu .ant-menu-item:hover:not(.ant-menu-item-selected) {
+  background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%) !important;
+  transform: translateX(4px);
+  color: #1a1a1a !important;
+}
+
+.modern-sidebar-menu .ant-menu-item:hover:not(.ant-menu-item-selected) .ant-menu-title-content,
+.modern-sidebar-menu .ant-menu-item:hover:not(.ant-menu-item-selected) .anticon {
+  color: #667eea !important;
+}
+
+/* 选中状态 */
+.modern-sidebar-menu .ant-menu-item-selected {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  color: white !important;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3) !important;
+}
+
+.modern-sidebar-menu .ant-menu-item-selected .ant-menu-title-content,
+.modern-sidebar-menu .ant-menu-item-selected .anticon {
+  color: white !important;
+}
+
+/* 选中状态的hover效果 */
+.modern-sidebar-menu .ant-menu-item-selected:hover {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  color: white !important;
+  box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4) !important;
+}
+
+.modern-sidebar-menu .ant-menu-item-selected:hover .ant-menu-title-content,
+.modern-sidebar-menu .ant-menu-item-selected:hover .anticon {
+  color: white !important;
+}
+
+.modern-sidebar-menu .ant-menu-item .anticon {
+  font-size: 18px;
+  margin-right: 12px;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  color: #1a1a1a !important;
+}
+
+.modern-sidebar-menu .ant-menu-item:hover:not(.ant-menu-item-selected) .anticon {
+  transform: scale(1.1);
+  color: #667eea !important;
+}
+
+.modern-sidebar-menu .ant-menu-item-selected .anticon {
+  transform: scale(1.1);
+  color: white !important;
+}
+
+/* 动态背景动画 */
+@keyframes float {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  25% {
+    transform: translate(100px, -100px) scale(1.1);
+  }
+  50% {
+    transform: translate(-80px, 80px) scale(0.9);
+  }
+  75% {
+    transform: translate(120px, 60px) scale(1.05);
+  }
+}
+
+@keyframes floatReverse {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  25% {
+    transform: translate(-120px, 100px) scale(0.95);
+  }
+  50% {
+    transform: translate(90px, -90px) scale(1.1);
+  }
+  75% {
+    transform: translate(-60px, -120px) scale(0.85);
+  }
+}
+
+@keyframes floatSlow {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(150px, 80px) scale(1.15);
+  }
+  66% {
+    transform: translate(-100px, -150px) scale(0.9);
+  }
+}
+
+.floating-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.4;
+  pointer-events: none;
+  animation: float 20s ease-in-out infinite;
+}
+
+.floating-blob-1 {
+  width: 300px;
+  height: 300px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  top: 10%;
+  left: 10%;
+  animation: float 25s ease-in-out infinite;
+}
+
+.floating-blob-2 {
+  width: 250px;
+  height: 250px;
+  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+  top: 60%;
+  right: 15%;
+  animation: floatReverse 30s ease-in-out infinite;
+  animation-delay: -5s;
+}
+
+.floating-blob-3 {
+  width: 350px;
+  height: 350px;
+  background: linear-gradient(135deg, #667eea80 0%, #764ba280 100%);
+  bottom: 20%;
+  left: 20%;
+  animation: floatSlow 35s ease-in-out infinite;
+  animation-delay: -10s;
+}
+
+.floating-blob-4 {
+  width: 200px;
+  height: 200px;
+  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+  top: 30%;
+  right: 30%;
+  animation: float 22s ease-in-out infinite;
+  animation-delay: -15s;
+}
+
+.floating-blob-5 {
+  width: 280px;
+  height: 280px;
+  background: linear-gradient(135deg, #667eea60 0%, #764ba260 100%);
+  bottom: 10%;
+  right: 10%;
+  animation: floatReverse 28s ease-in-out infinite;
+  animation-delay: -8s;
+}

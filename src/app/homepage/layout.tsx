@@ -8,7 +8,7 @@ export default function HomeLayout({
   children: React.ReactNode
 }) {
   return (
-    <AppLayout selectedKey="1">
+    <AppLayout>
       {children}
     </AppLayout>
   );
